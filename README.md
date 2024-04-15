@@ -13,7 +13,11 @@ source venv/bin/activate
 #安装依赖环境
 pip install -r requirements.txt
 ```
-p
+
+# Find-Train 微调
+
+[模型的训练Train](https://modelscope.cn/docs/%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AE%AD%E7%BB%83Train)
+
 # 微信公众号
 
 欢迎关注微信公众号：**TalkJava**
