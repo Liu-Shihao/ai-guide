@@ -274,3 +274,7 @@ Training with the previously defined hyper-parameters yields the following resul
 ```bash
 acc = 0.7093812375249501
 ```
+
+# Reference
+- [https://huggingface.co/docs/transformers/v4.39.3/zh/training](https://huggingface.co/docs/transformers/v4.39.3/zh/training)
+- [https://huggingface.co/docs/transformers/v4.39.3/zh/run_scripts](https://huggingface.co/docs/transformers/v4.39.3/zh/run_scripts)
