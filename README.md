@@ -14,9 +14,19 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-# Find-Train 微调
+# Jupyter
+[https://jupyter.org/install](https://jupyter.org/install)
 
-[模型的训练Train](https://modelscope.cn/docs/%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AE%AD%E7%BB%83Train)
+```shell
+
+pip install jupyterlab
+jupyter lab
+
+
+pip install notebook
+jupyter notebook
+
+```
 
 # 微信公众号
 
