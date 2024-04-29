@@ -14,7 +14,7 @@ pip install accelerate
 python -m pip install huggingface_hub
 huggingface-cli login
 """
-nlp = assemble("config.cfg")
+nlp = assemble("../training/config.cfg")
 doc = nlp("You look gorgeous!")
 print(doc.cats)
 # {"COMPLIMENT": 1.0, "INSULT": 0.0}
