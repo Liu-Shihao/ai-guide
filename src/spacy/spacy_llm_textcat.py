@@ -10,8 +10,13 @@ ValueError: Install CUDA to load and run the LLM on the GPU, or install 'acceler
 为了在 CPU 上进行动态分布式运行模型，您可以安装 accelerate 库。accelerate 是一个可以将深度学习模型动态分布到 CPU 或硬盘上运行的库。
 您可以使用以下命令安装 accelerate：
 pip install accelerate
+
+python -m pip install huggingface_hub
+huggingface-cli login
 """
 nlp = assemble("config.cfg")
 doc = nlp("You look gorgeous!")
 print(doc.cats)
 # {"COMPLIMENT": 1.0, "INSULT": 0.0}
+
+# TypeError: BFloat16 is not supported on MPS
