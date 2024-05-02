@@ -1,6 +1,6 @@
 import spacy
 import numpy as np
-from sklearn.metrics import roc_auc_score, roc_curve
+from sklearn.metrics import roc_auc_score, roc_curve, auc
 import matplotlib.pyplot as plt
 
 # 加载 SpaCy 模型
@@ -19,22 +19,22 @@ for text in X_test:
     y_prob.append(probs)
 
 y_prob = np.array(y_prob)
+print(y_prob)
 
 # 计算每个类别的 AUC-ROC
 auc_scores = []
 plt.figure(figsize=(10, 8))
-for i in range(y_prob.shape[1]):
-    # 取出当前类别的真实标签和预测概率
-    y_true_binary = np.array([1 if label == i else 0 for label in y_test])
-    fpr, tpr, _ = roc_curve(y_true_binary, y_prob[:, i])
-    auc = roc_auc_score(y_true_binary, y_prob[:, i])
-    auc_scores.append(auc)
-    # 绘制当前类别的 ROC 曲线
-    plt.plot(fpr, tpr, label=f'Class {i} (AUC = {auc:.2f})')
+for label in y_prob[0].keys():
+    y_true_binary = np.array([1 if sample_label == label else 0 for sample_label in y_true])
+    y_scores = np.array([sample_probs[label] for sample_probs in y_prob])
+    fpr, tpr, _ = roc_curve(y_true_binary, y_scores)
+    roc_auc = auc(fpr, tpr)
+    plt.plot(fpr, tpr, label=f'{label} (AUC = {roc_auc:.2f})')
 
-plt.plot([0, 1], [0, 1], 'k--', label='Random')
+plt.plot([0, 1], [0, 1], linestyle='--', color='gray', label='Random Guess')
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ROC Curve for Multi-class Text Classification')
-plt.legend(loc='lower right')
+plt.title('ROC Curve for Multi-label Classification')
+plt.legend()
+plt.grid()
 plt.show()
