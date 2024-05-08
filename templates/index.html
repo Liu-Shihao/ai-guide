@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        #chat-container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #messages {
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const messagesContainer = document.getElementById('messages');
+        const userInput = document.getElementById('user-input');
+
+        // 向后端发送消息并显示响应
+        const sendMessage = async () => {
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            appendMessage('You', message);
+
+            const response = await fetch('/chatbot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            });
+
+           const reader = response.body.getReader();
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                const message = new TextDecoder().decode(value);
+                appendMessage('Chatbot', message);
+            }
+
+            userInput.value = '';
+        };
+
+        // 在消息区域追加消息
+        const appendMessage = (sender, message) => {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${sender}: ${message}`;
+            messagesContainer.appendChild(messageElement);
+
+            // 滚动到底部
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        };
+
+        // 在回车键按下时发送消息
+        userInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

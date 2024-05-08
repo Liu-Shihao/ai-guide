@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Data</title>
+</head>
+<body>
+    <pre id="data-container"></pre>
+    <script>
+        const dataContainer = document.getElementById('data-container');
+
+        // 发起HTTP请求获取数据
+        const fetchData = async () => {
+            const response = await fetch('/stream_data');
+            const reader = response.body.getReader();
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                dataContainer.textContent += new TextDecoder().decode(value);
+            }
+        };
+
+        // 页面加载完毕后开始获取数据
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
